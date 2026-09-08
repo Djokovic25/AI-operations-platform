@@ -28,4 +28,13 @@ public class OrderController {
                 .status(HttpStatus.CREATED)
                 .body(response);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderResponse> getOrderById(
+            @PathVariable String id
+    ) {
+        OrderResponse response = orderService.getOrderById(id);
+
+        return ResponseEntity.ok(response);
+    }
 }

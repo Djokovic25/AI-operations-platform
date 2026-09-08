@@ -7,7 +7,7 @@ import com.opspilot.order_service.entity.Order;
 import com.opspilot.order_service.entity.OrderStatus;
 import com.opspilot.order_service.repository.OrderRepository;
 import org.springframework.stereotype.Service;
-
+import com.opspilot.order_service.exception.OrderNotFoundException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -42,6 +42,23 @@ public class OrderService {
                 savedOrder.getAmount(),
                 savedOrder.getStatus(),
                 savedOrder.getCreatedAt()
+        );
+    }
+    public OrderResponse getOrderById(String id) {
+
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() ->
+                        new OrderNotFoundException(id)
+                );
+
+        return new OrderResponse(
+                order.getId(),
+                order.getCustomerId(),
+                order.getProductId(),
+                order.getQuantity(),
+                order.getAmount(),
+                order.getStatus(),
+                order.getCreatedAt()
         );
     }
 }
