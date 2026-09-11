@@ -1,4 +1,8 @@
-package com.opspilot.paymentservice.Repository;
+package com.opspilot.paymentservice.repository;
 
-public class PaymentRepository {
+
+import com.opspilot.paymentservice.entity.Payment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PaymentRepository extends JpaRepository<Payment, String> {
 }
