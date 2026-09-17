@@ -1,0 +1,178 @@
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <h1>OpsPilot</h1>
+      <span>Operations Portal</span>
+    </div>
+
+    <nav class="navigation">
+      <button class="nav-item active">
+        <span>▦</span>
+        Dashboard
+      </button>
+
+      <button class="nav-item">
+        <span>▤</span>
+        Orders
+      </button>
+
+      <button class="nav-item">
+        <span>◈</span>
+        Payments
+      </button>
+
+      <button class="nav-item">
+        <span>✦</span>
+        AI Assistant
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <!-- Header -->
+    <header class="header">
+      <div>
+        <h2>Operations Dashboard</h2>
+        <p>Monitor and manage your operations</p>
+      </div>
+
+      <div class="system-status">
+        <span class="status-dot"></span>
+        All Systems Operational
+      </div>
+    </header>
+
+    <!-- Dashboard -->
+    <main class="content">
+      <!-- Statistics -->
+      <section class="stats">
+        <div class="stat-card">
+          <div class="stat-label">
+            Orders
+          </div>
+          <div class="stat-value">
+            24
+          </div>
+          <div class="stat-description">
+            Total orders
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">
+            Payments
+          </div>
+          <div class="stat-value">
+            18
+          </div>
+          <div class="stat-description">
+            Total payments
+          </div>
+        </div>
+
+        <div class="stat-card warning">
+          <div class="stat-label">
+            Failed Payments
+          </div>
+          <div class="stat-value">
+            3
+          </div>
+          <div class="stat-description">
+            Require attention
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">
+            Pending
+          </div>
+          <div class="stat-value">
+            5
+          </div>
+          <div class="stat-description">
+            Awaiting action
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Assistant -->
+      <section class="assistant-card">
+        <div class="assistant-header">
+          <div>
+            <h3>AI Operations Assistant</h3>
+            <p>
+              Ask OpsPilot about orders, payments, or operational issues.
+            </p>
+          </div>
+          <span class="ai-badge">
+            MCP Connected
+          </span>
+        </div>
+
+        <!-- Messages -->
+        <div class="messages">
+          <div
+            *ngFor="let message of messages"
+            class="message"
+            [class.user]="message.role === 'user'"
+            [class.assistant]="message.role === 'assistant'">
+            <div class="bubble">
+              {{ message.content }}
+            </div>
+          </div>
+
+          <div
+            *ngIf="loading"
+            class="message assistant">
+            <div class="bubble">
+              Thinking...
+            </div>
+          </div>
+        </div>
+
+        <!-- Welcome -->
+        <div
+          class="assistant-welcome"
+          *ngIf="messages.length === 0">
+          <p>Try asking:</p>
+          <div class="suggestions">
+            <button
+              type="button"
+              (click)="sendMessage('Get the details of order ORDER-12172fdf-4107-4c3c-bfd4-672f8defafa8')"
+              [disabled]="loading">
+              Get an order
+            </button>
+
+            <button
+              type="button"
+              (click)="sendMessage('Get the details of payment PAYMENT-0a6013f3-08be-4400-9eaf-b8ca63d1a848')"
+              [disabled]="loading">
+              Get a payment
+            </button>
+          </div>
+        </div>
+
+        <!-- Input -->
+        <div class="input-area">
+          <input
+            type="text"
+            [(ngModel)]="inputMessage"
+            (keyup.enter)="sendMessage()"
+            placeholder="Ask about an order or payment..."
+            [disabled]="loading">
+
+          <button
+            type="button"
+            (click)="sendMessage()"
+            [disabled]="loading || !inputMessage.trim()">
+            {{ loading ? 'Thinking...' : 'Send' }}
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+</div>

@@ -1,11 +1,11 @@
 package com.opspilot.operationsaiagent.controller;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import com.opspilot.operationsaiagent.service.ChatService;
 import org.springframework.web.bind.annotation.*;
+@CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/chat")
-@CrossOrigin(origins = "http://localhost:4200")
 public class ChatController {
 
     private final ChatService chatService;
